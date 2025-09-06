@@ -537,6 +537,43 @@
 			// transition: opacity 0.4s, transform 0.4s, margin 0.4s;
 			box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
+			#calculator-result {
+				position: absolute;
+				top: 100%;
+				left: 0;
+				right: 0;
+				margin-top: 8px;
+				padding: 0.8em 1em;
+				background-color: rgba(255, 255, 255, 0.95);
+				color: #333;
+				border-radius: 8px;
+				font-size: 1.1em;
+				box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				backdrop-filter: blur(10px);
+				-webkit-backdrop-filter: blur(10px);
+				z-index: 10;
+				opacity: 0;
+				transform: translateY(-10px);
+				transition: opacity 0.2s ease, transform 0.2s ease;
+				pointer-events: none;
+
+				&.shown {
+					opacity: 1;
+					transform: translateY(0);
+				}
+
+				#calc-expression {
+					display: block;
+					text-align: center;
+
+					.calc-result {
+						font-weight: bold;
+						color: var(--blue);
+					}
+				}
+			}
+
 			#searchbar {
 				height: 2.5em;
 				width: 100%;

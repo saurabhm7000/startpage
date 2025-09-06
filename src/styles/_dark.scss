@@ -251,6 +251,16 @@
 			box-shadow: none;
 		}
 	}
+
+	#sb_container #calculator-result {
+		background-color: rgba(28, 28, 30, 0.95);
+		color: #fff;
+		border-color: rgba(255, 255, 255, 0.1);
+
+		#calc-expression .calc-result {
+			color: #2990ff;
+		}
+	}
 }
 
 // dark mode

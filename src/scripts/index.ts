@@ -36,6 +36,60 @@ import {
 	validateHideElem,
 } from './utils'
 
+// Calculator functionality
+function evaluateExpression(expression: string): string | null {
+	// Remove spaces and check if it looks like a math expression
+	const cleanExpression = expression.replace(/\s/g, '')
+	
+	// Basic math expression regex: numbers, operators, parentheses, decimal points
+	const mathRegex = /^[0-9+\-*/().\s]+$/
+	
+	if (!mathRegex.test(cleanExpression) || cleanExpression.length === 0) {
+		return null
+	}
+	
+	// Check if expression contains at least one operator
+	const operatorRegex = /[+\-*/]/
+	if (!operatorRegex.test(cleanExpression)) {
+		return null
+	}
+	
+	try {
+		// Use Function constructor instead of eval for better security
+		const result = new Function('return ' + cleanExpression)()
+		
+		// Check if result is a valid number
+		if (typeof result === 'number' && !isNaN(result) && isFinite(result)) {
+			// Format the result to avoid very long decimals
+			const formattedResult = Number.isInteger(result) ? result.toString() : result.toFixed(8).replace(/\.?0+$/, '')
+			return `${expression} = <span class="calc-result">${formattedResult}</span>`
+		}
+		
+		return null
+	} catch (error) {
+		return null
+	}
+}
+
+function handleCalculatorInput(input: string) {
+	const calculatorResult = $('calculator-result')
+	const calcExpression = $('calc-expression')
+	
+	if (!calculatorResult || !calcExpression) return
+	
+	const result = evaluateExpression(input)
+	
+	if (result) {
+		calcExpression.innerHTML = result
+		clas(calculatorResult, true, 'shown')
+		clas(calculatorResult, false, 'hidden')
+	} else {
+		clas(calculatorResult, false, 'shown')
+		clas(calculatorResult, true, 'hidden')
+		calcExpression.innerHTML = ''
+	}
+}
+
 const eventDebounce = debounce(function (value: { [key: string]: unknown }) {
 	storage.sync.set(value)
 }, 400)
